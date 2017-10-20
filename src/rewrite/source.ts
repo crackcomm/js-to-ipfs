@@ -32,12 +32,19 @@ export function rewriteSource(table: { [name: string]: string }, source: string)
     if (isRequiredDef(node)) {
       // required package name
       const name = node.value;
+      if (name.startsWith('./') || name.startsWith('/')) {
+        return;
+      }
       // hash for package root
       const hash = table[name];
-      if (!hash) {
-        throw `hash not found for package ${name}`;
+      if (!hash && stdlib.indexOf(name) === -1) {
+        // throw `hash not found for package ${name}`;
+        // TODO: handle this logging for dev dependencies
+        // console.error(`hash not found for package ${name}`);
       }
       node.update(`'/ipfs/${hash}'`);
     }
   });
 }
+
+const stdlib = ['buffer', 'stream', 'fs'];

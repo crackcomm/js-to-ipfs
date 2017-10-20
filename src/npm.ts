@@ -14,13 +14,27 @@
  */
 import * as path from 'path';
 
-import glob from '../utils/glob';
+import glob from './utils/glob';
+import readFile from './utils/readFile';
 
 
 /**
  * Lists modules in package node_modules directory.
  */
-export function listModules(dir: string) {
-  return glob(path.join(dir, 'node_modules', '*'))
-      .then((dirs: any) => dirs.map(dir => ({name: path.basename(dir), dir})));
+export async function listModules(dir: string) {
+  const files = await glob(path.join(dir, 'node_modules', '*'));
+  return files.map(async (dir) => {
+    const name = path.basename(dir);
+    const pkg = await readPackage(dir);
+    return {name, pkg, dir};
+  });
+}
+
+
+/**
+ * Gets `package.json` from directory.
+ */
+export async function readPackage(dir: string) {
+  const file = await readFile(path.join(dir, 'package.json'));
+  return JSON.parse(file.toString());
 }

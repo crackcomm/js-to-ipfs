@@ -12,18 +12,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import 'jest';
-import {ipfsDeps, ipfsPackage} from '../src';
+import * as fs from 'fs';
 
-jest.setTimeout(60000);
+import promisify from './promisify';
 
-describe('ipfs', () => {
-  it('should upload simple example', async () => {
-    const hash = await ipfsPackage('tests/fixtures/simple');
-    expect(hash).toEqual('QmVmMxoQYNBQ6rskr2ATPs1D6zKijXzMfn2CMf3chQxycR');
-  });
-  it('should upload multihash example', async () => {
-    const hash = await ipfsPackage('tests/fixtures/multihash');
-    expect(hash).toEqual('QmbYcAH8J4yg3sGssi6cHYgAhcd2wFtZasE6KdyyzJDTc9');
-  });
-});
+
+export default promisify(fs.writeFile);

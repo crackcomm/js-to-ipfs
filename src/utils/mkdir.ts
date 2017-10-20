@@ -12,9 +12,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import * as fs from 'fs';
 
-var ms = require('ms');
+import promisify from './promisify';
 
-module.exports = function() {
-  console.log(ms(101023));
-}
+
+export default promisify(fs.mkdir);
