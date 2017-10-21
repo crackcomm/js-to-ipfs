@@ -47,7 +47,7 @@ const isRequiredDef = (node: any) =>
 
 
 /**
- * Rewrites source code to `/ipfs/` *requires*.
+ * Rewrites source code to IPFS *requires*.
  * @param table  Hash table
  * @param source Source code
  */
@@ -66,7 +66,7 @@ export function rewriteSource(table: {[name: string]: string}, source: string) {
         // throw `hash not found for package ${name}`;
         // console.error(`hash not found for package ${name}`);
       }
-      node.update(`'/ipfs/${hash}'`);
+      node.update(hash);
     }
   });
 }
