@@ -12,9 +12,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as fs from 'fs';
 
-import promisify from './promisify';
-
-
-export default promisify(fs.mkdir);
+export default [
+  'assert',
+  'async_hooks',
+  'buffer',
+  'child_process',
+  'cluster',
+  'console',
+  'constants',
+  'crypto',
+  'dgram',
+  'dns',
+  'domain',
+  'events',
+  'fs',
+  'http',
+  'https',
+  'inspector',
+  'net',
+  'os',
+  'path',
+  'process',
+  'punycode',
+  'querystring',
+  'readline',
+  'repl',
+  'stream',
+  'string_decoder',
+  'sys',
+  'timers',
+  'tls',
+  'tty',
+  'url',
+  'util',
+  'v8',
+  'vm',
+  'zlib'
+];

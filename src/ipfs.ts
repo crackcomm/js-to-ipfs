@@ -13,15 +13,15 @@
  * limitations under the License.
  */
 import {listModules} from './npm';
-import {rewriteModule} from './rewrite';
-import exec from './utils/exec';
+import {rewritePackage} from './rewrite';
+import {exec} from './utils';
 
 /**
  * Uploads npm package with dependencies to IPFS.
  */
 export async function ipfsPackage(dir: string) {
   const modules = await ipfsDeps(dir);
-  const result = await rewriteModule(modules, dir);
+  const result = await rewritePackage(modules, dir);
   return await ipfsAdd(result);
 }
 
@@ -77,7 +77,7 @@ export class Uploader {
   }
 
   private async upload(mod: any) {
-    const dir = await rewriteModule(this.uploaded, mod.dir);
+    const dir = await rewritePackage(this.uploaded, mod.dir);
     this.uploaded[mod.name] = await ipfsAdd(dir);
   }
 

@@ -13,4 +13,5 @@
  * limitations under the License.
  */
 export * from './ipfs';
+export * from './npm';
 export * from './rewrite';

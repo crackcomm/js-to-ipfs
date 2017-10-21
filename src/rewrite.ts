@@ -13,22 +13,46 @@
  * limitations under the License.
  */
 import * as falafel from 'falafel';
+import * as os from 'os';
+import * as path from 'path';
+
+import {copyPackage} from './npm';
+import {glob, readFile, writeFile} from './utils';
+import STDLIB from './stdlib';
+
+/**
+ * Rewrites JavaScript package `requires` to IPFS requires from table of hashes.
+ * Returns directory containing a copy of package with rewritten source code.
+ */
+export async function rewritePackage(table: any, dir: string) {
+  const tempDir = await copyPackage(dir);
+  const files = await glob(path.join(tempDir, '**/*.js'));
+  await Promise.all(files.map(async (file: string) => {
+    const source = await readFile(file);
+    const newSource = rewriteSource(table, source.toString());
+    await writeFile(file, newSource);
+  }));
+  return tempDir;
+}
+
 
 // Returns true if node is a `require` call
-const isRequireCall = node =>
+const isRequireCall = (node: any) =>
     node.type === 'CallExpression' && node.callee.name == 'require';
 
+
 // Returns true if node is a `require` definition
-const isRequiredDef = node =>
+const isRequiredDef = (node: any) =>
     node.type === 'Literal' && isRequireCall(node.parent);
+
 
 /**
  * Rewrites source code to `/ipfs/` *requires*.
  * @param table  Hash table
  * @param source Source code
  */
-export function rewriteSource(table: { [name: string]: string }, source: string) {
-  return falafel(source, node => {
+export function rewriteSource(table: {[name: string]: string}, source: string) {
+  return falafel(source, (node: any) => {
     if (isRequiredDef(node)) {
       // required package name
       const name = node.value;
@@ -37,14 +61,12 @@ export function rewriteSource(table: { [name: string]: string }, source: string)
       }
       // hash for package root
       const hash = table[name];
-      if (!hash && stdlib.indexOf(name) === -1) {
+      if (!hash && STDLIB.indexOf(name) === -1) {
+        // TODO(crackcomm): handle this logging for dev dependencies
         // throw `hash not found for package ${name}`;
-        // TODO: handle this logging for dev dependencies
         // console.error(`hash not found for package ${name}`);
       }
       node.update(`'/ipfs/${hash}'`);
     }
   });
 }
-
-const stdlib = ['buffer', 'stream', 'fs'];

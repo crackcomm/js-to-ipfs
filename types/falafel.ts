@@ -12,21 +12,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Promisifies a function
- */
-export default function promifify(fn: Function) {
-  return function(...args): Promise<any> {
-    return new Promise((resolve, reject) => {
-      const callback = (err, res) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(res);
-        }
-      };
-      return fn(...args, callback);
-    })
-  };
-}
+declare module 'falafel';

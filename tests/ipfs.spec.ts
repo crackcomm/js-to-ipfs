@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 import 'jest';
-import {ipfsDeps, ipfsPackage} from '../src';
+import {ipfsPackage} from '../src';
 
 jest.setTimeout(60000);
 

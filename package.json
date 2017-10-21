@@ -1,6 +1,7 @@
 {
     "name": "js-ipfs-pack",
-    "main": "src/index.js",
+    "bin": "dist/bin/cli.js",
+    "main": "dist/src/index.js",
     "version": "0.0.1",
     "license": "Apache2",
     "website": "https://github.com/crackcomm/js-ipfs-pack",
@@ -14,6 +15,8 @@
         "glob": "^7.1.2"
     },
     "devDependencies": {
+        "@types/fs-extra": "^4.0.2",
+        "@types/glob": "^5.0.33",
         "@types/jest": "^21.1.4",
         "@types/node": "^8.0.44",
         "jest": "^21.2.1",
