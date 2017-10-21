@@ -2,7 +2,7 @@
     "name": "js-ipfs-pack",
     "bin": "dist/bin/cli.js",
     "main": "dist/src/index.js",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "license": "Apache2",
     "website": "https://github.com/crackcomm/js-ipfs-pack",
     "repository": {
