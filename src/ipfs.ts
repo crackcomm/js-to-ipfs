@@ -1,20 +1,9 @@
 /**
- * @license
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * @license Apache-2.0
  */
-import {listModules} from './npm';
-import {rewritePackage} from './rewrite';
-import {exec} from './utils';
+import { exec } from '@ipfn/util';
+import { listModules } from './npm';
+import { rewritePackage } from './rewrite';
 
 /**
  * Uploads npm package with dependencies to IPFS.
@@ -40,7 +29,7 @@ export async function ipfsDeps(dir: string) {
  * Uploads directory to IPFS.
  */
 export async function ipfsAdd(cwd: string) {
-  const stdout = await exec('ipfs add -r -Q .', {cwd});
+  const stdout = await exec('ipfs add -r -Q .', { cwd });
   return stdout.trim();
 }
 
@@ -58,7 +47,7 @@ export class Uploader {
       ok = await this.tryUpload();
     }
     const done = this.modules.reduce(
-        (prev: boolean, mod: any) => prev && this.uploaded[mod.name], true);
+      (prev: boolean, mod: any) => prev && this.uploaded[mod.name], true);
     if (!done) {
       throw `could not finish uploading`;
     }
@@ -90,6 +79,6 @@ export class Uploader {
     }
     const deps = Object.keys(mod.pkg.dependencies);
     return deps.reduce(
-        (prev: boolean, name: any) => prev && this.uploaded[name], true);
+      (prev: boolean, name: any) => prev && this.uploaded[name], true);
   }
 }

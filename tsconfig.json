@@ -1,17 +1,21 @@
 {
-    "compilerOptions": {
-        "outDir": "dist",
-        "module": "commonjs",
-        "declaration": true,
-        "target": "es6",
-        "types": [
-            "node",
-            "jest"
-        ]
-    },
-    "include": [
-        "bin/**/*.ts",
-        "src/**/*.ts",
-        "types/**/*.ts"
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true,
+    "sourceMap": false,
+    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "dist",
+    "typeRoots": [
+      "node_modules/@types"
     ]
+  },
+  "include": [
+    "bin",
+    "src"
+  ]
 }
